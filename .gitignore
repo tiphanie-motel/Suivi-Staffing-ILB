@@ -1,0 +1,8 @@
+
+# pixi environments
+.pixi
+*.egg-info
+
+# Other
+test.xlsx
+test.md
