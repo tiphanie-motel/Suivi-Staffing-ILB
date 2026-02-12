@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 
 
-
 def get_details_about_someone(vision_personne, prenom_nom, year, month):
     
     mask_date = (vision_personne["date"].dt.year == year) & (vision_personne["date"].dt.month == month)
