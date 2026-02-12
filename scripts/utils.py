@@ -3,6 +3,9 @@ import pandas as pd
 import ast
 from unidecode import unidecode
 
+def date_to_str(date):
+    return str(date.year)+'-'+str(date.month).zfill(2)+'-'+str(date.day).zfill(2)
+
 
 def get_last_friday():
     today = datetime.datetime.today()
@@ -12,10 +15,6 @@ def get_last_friday():
     else: 
         diff = week_day+3
     return today-datetime.timedelta(days=diff)
-
-
-def date_to_str(date):
-    return str(date.year)+'-'+str(date.month).zfill(2)+'-'+str(date.day).zfill(2)
 
 
 def get_all_fridays(min_date, max_date):

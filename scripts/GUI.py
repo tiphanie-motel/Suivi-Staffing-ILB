@@ -27,6 +27,9 @@ from scripts.BDD_update_steps import (
 # GUI
 
 class suivi_projet_GUI(tk.Tk):
+    """
+    Interface graphique tkinter.
+    """
     
     def __init__(self):
         super().__init__()

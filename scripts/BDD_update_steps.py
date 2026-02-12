@@ -286,7 +286,7 @@ def update_utils_personne(status_information: pd.DataFrame,
     Logique:
         - Détecte les ajouts/suppressions/modifications
         - Pour chaque changement, ajoute une entrée datée dans le format adapté
-        - Format: [value_0, threshold_date, value_1, ..., threshold_date_n, value_n]
+        - Format: [value_0, threshold_date_1, value_1, ..., threshold_date_n, value_n]
         
     Args:
         status_information: Nouvelles informations de statut (source)
@@ -641,6 +641,7 @@ def update_vision_personne(
 ):
     """
     Met à jour le feuille "Vision personne" de BDD.
+    Vision personne est tirée de aggregated_data (qui a été précédement standardisée et augmentée par les lignes manquantes tirées de BDD)
     """
 
     try:
@@ -654,7 +655,7 @@ def update_vision_personne(
         if n_unknown_prenom_nom:
             unique_unknown = vision_personne["prenom_nom"][mask_unknown_prenom_nom].unique()
             log.append(f"{n_unknown_prenom_nom} prénom.nom inconnus détectés (valeurs : {unique_unknown}).")
-        vision_personne = vision_personne[~ mask_unknown_prenom_nom].copy() #!
+        vision_personne = vision_personne[~ mask_unknown_prenom_nom].copy() 
 
 
         # Retire "_Terminé - " de la colonne root_name (cohérent avec le root_name des contrats)
@@ -691,7 +692,10 @@ def update_vision_personne(
             log.append(f"Où modifier ? {path_to_categorisation}")
 
         
-        # Ajoute grade à date, taux horaire associé
+        # Ajoute grade à date et taux horaire à date associés
+        # Utilise utils_personne pour savoir quel valuer appliquer.
+        # Pour rappel utils_personne contient des valeurs sous le format: [value_0, threshold_date_1, value_1, ..., threshold_date_n, value_n]
+        # On utilise alors valeur i entre les dates i et i+1
         grade_column, log_temp = build_column_tool(vision_personne, "grade", "UNKNOWN", utils_personne)
         log.extend(log_temp)
         taux_horaire_column, log_temp = build_column_tool(vision_personne, "taux_horaire", np.nan, utils_personne)
@@ -716,6 +720,9 @@ def update_vision_personne(
         )
         
         # Ajoute appartenance labs
+        # Utilise utils_personne pour savoir quel valuer appliquer.
+        # Pour rappel utils_personne contient des valeurs sous le format: [value_0, threshold_date_1, value_1, ..., threshold_date_n, value_n]
+        # On utilise alors valeur i entre les dates i et i+1
         labs, new_labs_cols, log_temp = build_labs_columns(vision_personne, utils_personne)
         log.extend(log_temp)
         

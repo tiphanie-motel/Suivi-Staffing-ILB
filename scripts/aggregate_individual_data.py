@@ -45,7 +45,30 @@ def explode_weekly_df(df, id_cols=['id'], date_col='date'):
 
 # Reading every excel and aggregating in a single df
 def aggregate_individual_data(folder_path):
-    
+    """
+    Agrège les données individuelles de temps passé par projet à partir de fichiers Excel (.xlsm)
+    situés dans un dossier spécifié. Effectue des vérifications de cohérence sur les noms et les projets,
+    et génère un journal des problèmes rencontrés.
+
+    Cette fonction lit chaque fichier Excel dans le dossier, extrait les données de la feuille "Archive",
+    vérifie la cohérence entre le nom du fichier et les noms trouvés dans les données, ainsi que
+    la présence de projets manquants. Les données sont ensuite concaténées en un seul DataFrame.
+
+    Paramètres
+    ----------
+    folder_path : str
+        Chemin absolu ou relatif vers le dossier contenant les fichiers Excel (.xlsm) à agréger.
+
+    Retourne
+    --------
+    tuple
+        Un tuple contenant :
+        - aggregated_public_archives : pandas.DataFrame
+            DataFrame agrégé contenant toutes les données individuelles de temps passé par projet.
+        - log : str
+    """
+
+
     file_names = [f for f in os.listdir(folder_path) if f.endswith('.xlsm')]
     df_list = []
     
