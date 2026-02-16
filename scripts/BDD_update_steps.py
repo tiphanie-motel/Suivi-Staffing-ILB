@@ -687,11 +687,13 @@ def update_vision_personne(
         projets_sans_categorie = set(vision_personne[vision_personne[["Type", "Sujet"]].isna().any(axis=1)].root_name.values)
         projets_sans_categorie = projets_sans_categorie - set(["ILB - Congés & Arrêts (hors jours fériés)", "ILB - Jour Férié"])
         if projets_sans_categorie:
-            log.append("Projets pour lesquels il manque l'information de Type / Sujet :")
-            log.append(' - '+'\n - '.join(projets_sans_categorie))
-            log.append(f"Où modifier ? {path_to_categorisation}")
+            text = "Projets pour lesquels il manque l'information de Type / Sujet :\n - "
+            text += '\n - '.join(projets_sans_categorie)
+            text += f"\nOù modifier ? {path_to_categorisation}"
+            print(text)
+            log.append(text)
 
-        
+
         # Ajoute grade à date et taux horaire à date associés
         # Utilise utils_personne pour savoir quel valuer appliquer.
         # Pour rappel utils_personne contient des valeurs sous le format: [value_0, threshold_date_1, value_1, ..., threshold_date_n, value_n]
