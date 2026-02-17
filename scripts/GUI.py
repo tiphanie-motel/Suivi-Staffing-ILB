@@ -319,7 +319,7 @@ class suivi_projet_GUI(tk.Tk):
                     utils_contrat_prev=data['bdd_utils_contrat']
                 )
                 if log:
-                    log_str = f"{'\n\n'.join(log)}\n\n"
+                    log_str = f"{'\n'.join(log)}\n"
                 else:
                     log_str = ""
                 if not tk.messagebox.askokcancel("Mise à jour 'Utils contrat' (BDD)", f"{log_str}Souhaitez vous poursuivre ? 'Annuler' pour revenir au menu principal."):
