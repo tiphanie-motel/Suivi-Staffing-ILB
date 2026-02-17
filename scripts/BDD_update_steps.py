@@ -641,7 +641,7 @@ def update_vision_personne(
 ):
     """
     Met à jour le feuille "Vision personne" de BDD.
-    Vision personne est tirée de aggregated_data (qui a été précédement standardisée et augmentée par les lignes manquantes tirées de BDD)
+    Vision personne est tirée de aggregated_data (qui a été précédemment standardisée et augmentée par les lignes manquantes tirées de BDD)
     """
 
     try:
@@ -654,7 +654,7 @@ def update_vision_personne(
         n_unknown_prenom_nom = np.sum(mask_unknown_prenom_nom)
         if n_unknown_prenom_nom:
             unique_unknown = vision_personne["prenom_nom"][mask_unknown_prenom_nom].unique()
-            log.append(f"{n_unknown_prenom_nom} prénom.nom inconnus détectés (valeurs : {unique_unknown}).")
+            log.append(f"{n_unknown_prenom_nom} lignes avec prénom.nom inconnus détectés (valeurs : {unique_unknown}). Non inclus dans BDD.")
         vision_personne = vision_personne[~ mask_unknown_prenom_nom].copy() 
 
 
