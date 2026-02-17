@@ -123,7 +123,8 @@ class suivi_projet_GUI(tk.Tk):
             n_projects_L.config(text=str(self.aggregated_public_archives["Projet ?"].nunique()))
             
             # On prend uniquement les 12 derniers vendredi pour le menu déroulant
-            self.available_fridays = self.aggregated_public_archives[self.aggregated_public_archives['jour'] == 'Vendredi']['Date'].drop_duplicates().sort_values().to_list()[:-13:-1]
+            n_friday_displayed = 12 #! MODIFIABLE
+            self.available_fridays = self.aggregated_public_archives[self.aggregated_public_archives['jour'] == 'Vendredi']['Date'].drop_duplicates().sort_values().to_list()[:-n_friday_displayed -1:-1]
             self.available_fridays_translation_dict = dict(zip([date_to_str(date) for date in self.available_fridays], self.available_fridays))
             friday_menu["menu"].delete(0, "end")
             for option in self.available_fridays_translation_dict.keys():
@@ -134,7 +135,7 @@ class suivi_projet_GUI(tk.Tk):
                 On met en avant les projets trouvés qui n'apparaissent pas dans le fichier de staffing prévisionnel (et les personnes associées)
                 """
                 # On ne regarde qu'après threshold_date, car les modifications ont été apportées à ce moment
-                threshold_date = '2026-01-01'
+                threshold_date = '2026-01-01' #! MODIFIABLE
                 filtered_agg_data = self.aggregated_public_archives[self.aggregated_public_archives['Date'] > pd.to_datetime(threshold_date)]
                 used_project_names = filtered_agg_data["Projet ?"].unique()
                 suspect_project_names = used_project_names[~ np.isin(used_project_names, self.all_project_names)]
