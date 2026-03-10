@@ -31,8 +31,8 @@ def checking_the_good_labsiens(vision_personne, k_months_ago=6):
     reported_weeks = pd.DataFrame(rows, columns = sorted_names, index = sorted_dates)
     
     last_date = reported_weeks.index.max()
-    k_months_ago = last_date - pd.DateOffset(months=k_months_ago)
-    reported_weeks = reported_weeks.loc[k_months_ago:]
+    date_k_months_ago = last_date - pd.DateOffset(months=k_months_ago)
+    reported_weeks = reported_weeks.loc[date_k_months_ago:]
     
     empty_cols = reported_weeks.sum()
     kept_individuals = empty_cols[empty_cols!=0].index
@@ -66,7 +66,7 @@ def checking_the_good_labsiens(vision_personne, k_months_ago=6):
     # Ajouter des labels et une légende
     ax.set_xlabel("Semaines")
     ax.set_ylabel("Individus")
-    ax.set_title("Semaines renseignées sur les 6 derniers mois.")
+    ax.set_title(f"Semaines renseignées sur les {k_months_ago} derniers mois.")
 
     # Affichage
     plt.tight_layout()
