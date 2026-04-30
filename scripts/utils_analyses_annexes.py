@@ -45,7 +45,7 @@ def checking_the_good_labsiens(vision_personne, k_months_ago=6):
     condition = reported_weeks.values.T
 
     # Initialiser la figure
-    fig, ax = plt.subplots(figsize=(10, 0.2*len(individus)))
+    fig, ax = plt.subplots(figsize=(10, 0.35*len(individus)))
 
     # Pour chaque individu, dessiner une ligne épaisse
     for i, individu in enumerate(individus):
